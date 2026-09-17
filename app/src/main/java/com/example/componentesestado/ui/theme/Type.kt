@@ -9,8 +9,9 @@ import androidx.compose.ui.unit.sp
 import com.example.componentesestado.R
 
 val metamorphous_font = FontFamily(
-    Font(R.font.metamorphous_regular)
-)
+    Font(R.font.metamorphous_regular) // <- caminho onde está localizada a fonte R= res font = diretório matamorphou_regular = nome do arquivo da fonte
+) // Importação da fonte externa
+
 // Set of Material typography styles to start with
 val Typography = Typography(
     bodyLarge = TextStyle(
