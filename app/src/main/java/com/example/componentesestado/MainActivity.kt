@@ -2,6 +2,7 @@ package com.example.componentesestado
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -13,9 +14,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,6 +28,8 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -30,6 +37,9 @@ import com.example.componentesestado.ui.theme.ComponentesEstadoTheme
 import com.example.componentesestado.ui.theme.metamorphous_font
 
 class MainActivity : ComponentActivity() {
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -51,22 +61,7 @@ class MainActivity : ComponentActivity() {
                             ,
                             verticalArrangement = Arrangement.Center
                         ) {
-                            AndroidEnemy(
-                                modifier = Modifier
-                                    .padding(innerPadding)
-                                    .size(200.dp)
-                                    .align(Alignment.CenterHorizontally)
-                                ,
-                                color = Color(0xFFF54927)
-                            )
-                            AndroidEnemy(
-                                modifier = Modifier
-                                    .padding(innerPadding)
-                                    .size(200.dp)
-                                    .align(Alignment.CenterHorizontally)
-                                ,
-                                color = Color.DarkGray
-                            )
+                            ContentContainer()
                         }
                     }
                 }
@@ -76,6 +71,8 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun BasicComponentsScreen(modifier: Modifier = Modifier){
+
+
         Column(modifier
             .fillMaxWidth()
             .background(Color(0xFFCC0000)) //Utilização de código hexadecimal para definição da cor
@@ -100,7 +97,54 @@ class MainActivity : ComponentActivity() {
                 fontSize = 12.sp,
                 fontFamily = FontFamily.SansSerif //Utilização de fonte padrão do JetPack Compose
             )
+
+
         }
+    }
+
+    @Composable
+    fun ContentContainer(modifier: Modifier = Modifier) {
+        var textoInput = remember {
+            mutableStateOf("")
+        }
+
+        var quantidade = remember {
+            mutableStateOf("")
+        }
+
+        TextField(
+            modifier = Modifier.padding(20.dp, 0.dp),
+            value = textoInput.value,
+            onValueChange = {
+                    novoValor -> Log.i("teste", novoValor)
+
+                textoInput.value = novoValor
+            },
+
+        )
+
+        TextField(
+            modifier = Modifier.padding(20.dp, 0.dp),
+            value = quantidade.value,
+
+            onValueChange = {
+                novoValor -> quantidade.value = novoValor
+            },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            placeholder = {Text("DIGITE AQUI UMA QUANTIDADE!!")}
+
+        )
+
+        TextField(
+            modifier = Modifier.padding(20.dp, 0.dp),
+            value = textoInput.value,
+            onValueChange = {
+                    novoValor -> textoInput.value = novoValor
+            },
+            keyboardOptions = KeyboardOptions(
+                capitalization = KeyboardCapitalization.Sentences
+            )
+        )
     }
 
     @Composable
